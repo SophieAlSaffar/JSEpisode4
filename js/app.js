@@ -13,7 +13,7 @@ let todoList;
  * Setup Function:
  * - grabs the high level elements and stores them in variables
  * - adds event handlers to already existing tasks
- * 
+ *
  * DO NOT EDIT THIS FUNCTION!!!
  ***************************************************************/
 const setup = function() {
@@ -57,8 +57,8 @@ const createNewTask = function(taskString) {
 
   // COMPLETE ME!
   // Add handlers for the edit button and checkbox
-  // editButton.onclick = ...
-  // checkBox.onchange = ...
+  editButton.onclick = editTask;
+  checkBox.onchange = completeTask;
 
   // Append each element to the listItem
   listItem.appendChild(checkBox);
@@ -78,8 +78,16 @@ const createNewTask = function(taskString) {
  *****************************************************/
 const addTask = function() {
   // Complete me!
-};
+  let listItem;
+  if (taskInput.value === ""){
+   listItem = createNewTask("New Task")
 
+  }else{
+   listItem = createNewTask(taskInput.value)
+  }
+  todoList.append(listItem);
+  taskInput.value = "";
+};
 /*****************************************************************
  * Edit a task:
  * - Get the current list item
@@ -96,8 +104,20 @@ const addTask = function() {
 const editTask = function() {
   // get the current list item which is the parent
   // node of the current button (`this`)
+
   let listItem = this.parentNode;
   // Complete me!
+  let label = listItem.querySelector("label");
+  let input = listItem.querySelector("input[type=text]");
+  if (listItem.classList.contains("edit-mode")){
+    label.innerHTML = input.value;
+    this.innerHTML = "Edit";
+  }else{
+
+  input.value = label.innerHTML;
+  this.innerHTML = "Save";
+  }
+listItem.classList.toggle("edit-mode");
 };
 
 /***********************************
@@ -107,6 +127,8 @@ const editTask = function() {
  ***********************************/
 const completeTask = function() {
   // Complete me!
+  let listItem = this.parentNode;
+  listItem.remove();
 };
 
 module.exports = {
